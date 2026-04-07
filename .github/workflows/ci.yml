@@ -23,16 +23,16 @@ jobs:
       run: docker push savitadhairya/myapp:${{ github.sha }}
 
     - name: Update Manifest Repo
- 
+
       run: |
-        git clone https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/DhairyaSavita/myapp-manifest.git
+        git clone https://x-access-token:${{ secrets.PAT_TOKEN }}@github.com/DhairyaSavita/myapp-manifest.git
         cd myapp-manifest
-
+        
         sed -i "s|image:.*|image: dhairyasavita/myapp:${{ github.sha }}|g" deployment.yaml
-
+        
         git config user.name "github-actions"
         git config user.email "actions@github.com"
-
+        
         git add .
         git commit -m "Update image version" || echo "No changes"
         git push
